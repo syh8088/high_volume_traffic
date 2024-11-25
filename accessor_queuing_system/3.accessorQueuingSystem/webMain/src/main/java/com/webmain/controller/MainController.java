@@ -67,13 +67,13 @@ public class MainController {
         ResponseEntity<AllowedUserResponse> response
                 = restTemplate.getForEntity(uri, AllowedUserResponse.class);
 
-        if (response.getBody() == null || !response.getBody().allowed()) {
+        response.getBody();
+        if (!response.getBody().allowed()) {
 
             // 대기 웹페이지로 리다이렉트
-            String redirectUrl = "redirect:http://localhost:8081/waiting-room?user_id=%d&redirect_url=%s".formatted(
-                    userId, "http://localhost:8080/main?user_id=%d".formatted(userId));
 
-            return redirectUrl;
+            return "redirect:http://localhost:8081/waiting-room?user_id=%d&redirect_url=%s".formatted(
+                    userId, "http://localhost:8080/main?user_id=%d".formatted(userId));
         }
 
         // 허용 상태라면 해당 페이지를 진입

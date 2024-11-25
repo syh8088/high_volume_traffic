@@ -14,6 +14,11 @@ import reactor.core.publisher.Mono;
 public class WaitingRoomController {
     private final AccessorQueuingService accessorQueuingService;
 
+    @GetMapping("test")
+    public Mono<Rendering> waitingRoomPage() {
+       return Mono.just(Rendering.view("waiting-room.html").build());
+    }
+
     @GetMapping("/waiting-room")
     Mono<Rendering> waitingRoomPage(@RequestParam(name = "queue", defaultValue = "default") String queue,
                                     @RequestParam(name = "user_id") Long userId,

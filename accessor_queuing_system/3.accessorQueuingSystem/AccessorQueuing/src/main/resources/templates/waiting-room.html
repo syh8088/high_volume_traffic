@@ -2,10 +2,9 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
-  <title>접속자대기열시스템</title>
   <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: EF_Diary,serif;
             background-color: #f5f5f5;
             margin: 0;
             padding: 0;
@@ -17,20 +16,17 @@
         .message {
             text-align: center;
             padding: 20px;
-            font-size: 18px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-size: 27px;
         }
   </style>
 </head>
 <body>
 <div class="message">
-  <h1>접속량이 많습니다.</h1>
-  <span>현재 대기 순번 </span><span id="number">[[${number}]]</span><span> 입니다.</span>
+  <h1>서비스 접근 대기 중 입니다.</h1>
+  <span>고객님의 대기열은 </span><span style="color: red;" id="number">[[${number}]]</span><span>명 입니다.</span>
   <br/>
-  <p>서버의 접속량이 많아 시간이 걸릴 수 있습니다.</p>
-  <p>잠시만 기다려주세요.</p>
+  <p>현재 접속 사용자가 많아 대기중이며</p>
+  <p>잠시만 기다리시면 자동 접속 됩니다.</p>
   <p id="updated"></p>
   <br/>
 </div>
@@ -60,7 +56,7 @@
       .catch(error => console.error(error));
   }
 
-  setInterval(fetchWaitingRank, 3000);
+  // setInterval(fetchWaitingRank, 3000);
 </script>
 </body>
 </html>
