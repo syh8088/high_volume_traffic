@@ -1,11 +1,9 @@
 package com.accessor_queuing_system_main.controller;
 
 import com.accessor_queuing_system_main.domain.response.NoticeResponse;
-import com.accessor_queuing_system_main.domain.response.NoticeResponses;
 import com.accessor_queuing_system_main.service.MainService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
