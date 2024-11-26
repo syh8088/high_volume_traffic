@@ -1,5 +1,6 @@
 package com.webmain.controller;
 
+import com.webmain.common.IdempotencyCreator;
 import com.webmain.service.MainService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +32,7 @@ public class MainController {
     public String main(
             final Model model,
             @RequestParam(name = "queue", defaultValue = "default") String queue,
-            @RequestParam(name = "user_id") Long userId,
+            @RequestParam(name = "idempotencyKey", required = false) String idempotencyKey,
             ServerHttpRequest request
     ) {
 
@@ -54,11 +55,12 @@ public class MainController {
             token = (Objects.isNull(cookie)) ? new HttpCookie(cookieName, "").getValue() : cookie.getValue();
         }
 
+        idempotencyKey = (Objects.isNull(idempotencyKey)) ? IdempotencyCreator.create(request): idempotencyKey;
         var uri = UriComponentsBuilder
                 .fromUriString("http://localhost:8081")
                 .path("/api/accessor-queuing/allowed-user")
                 .queryParam("queue", queue)
-                .queryParam("user_id", userId)
+                .queryParam("idempotencyKey", idempotencyKey)
                 .queryParam("token", token)
                 .encode()
                 .build()
@@ -71,9 +73,8 @@ public class MainController {
         if (!response.getBody().allowed()) {
 
             // 대기 웹페이지로 리다이렉트
-
-            return "redirect:http://localhost:8081/waiting-room?user_id=%d&redirect_url=%s".formatted(
-                    userId, "http://localhost:8080/main?user_id=%d".formatted(userId));
+            return "redirect:http://localhost:8081/waiting-room?idempotencyKey=%s&redirect_url=%s".formatted(
+                    idempotencyKey, "http://localhost:8080/main?idempotencyKey=%s".formatted(idempotencyKey));
         }
 
         // 허용 상태라면 해당 페이지를 진입

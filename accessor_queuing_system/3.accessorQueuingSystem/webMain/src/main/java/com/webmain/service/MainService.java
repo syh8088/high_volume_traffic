@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
+import java.time.Duration;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -21,6 +23,6 @@ public class MainService {
         return noticeFlux.flatMap(notice -> {
             NoticeResponse instance = NoticeResponse.getInstance(notice);
             return Flux.just(instance);
-        });
+        }).delayElements(Duration.ofMillis(100L));
     }
 }

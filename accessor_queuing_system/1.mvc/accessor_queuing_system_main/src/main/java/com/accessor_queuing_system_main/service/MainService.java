@@ -19,6 +19,13 @@ public class MainService {
 
     public List<NoticeResponse> selectNotices() {
         List<Notice> noticeList = noticeRepository.findAll();
+
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         return NoticeResponse.getInstance(noticeList);
     }
 }

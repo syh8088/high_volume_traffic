@@ -23,9 +23,9 @@ public class AccessorQueuingController {
     @PostMapping("user")
     public Mono<RegisterUserResponse> registerUser(
             @RequestParam(name = "queue", defaultValue = "default") String queue,
-            @RequestParam(name = "user_id") Long userId
+            @RequestParam(name = "idempotencyKey") String idempotencyKey
     ) {
-        return accessorQueuingService.registerWaitQueue(queue, userId)
+        return accessorQueuingService.registerWaitQueue(queue, idempotencyKey)
                 .map(RegisterUserResponse::new);
     }
 
@@ -41,29 +41,29 @@ public class AccessorQueuingController {
     @GetMapping("/allowed-user")
     public Mono<AllowedUserResponse> isAllowedUser(
             @RequestParam(name = "queue", defaultValue = "default") String queue,
-            @RequestParam(name = "user_id") Long userId,
+            @RequestParam(name = "idempotencyKey") String idempotencyKey,
             @RequestParam(name = "token") String token
     ) {
-        return accessorQueuingService.isAllowedByToken(queue, userId, token)
+        return accessorQueuingService.isAllowedByToken(queue, idempotencyKey, token)
                 .map(AllowedUserResponse::new);
     }
 
     @GetMapping("/rank")
     public Mono<RankNumberResponse> getRankUser(
             @RequestParam(name = "queue", defaultValue = "default") String queue,
-            @RequestParam(name = "user_id") Long userId
+            @RequestParam(name = "idempotencyKey") String idempotencyKey
     ) {
-        return accessorQueuingService.getRank(queue, userId)
+        return accessorQueuingService.getRank(queue, idempotencyKey)
                 .map(RankNumberResponse::new);
     }
 
     @GetMapping("/touch")
     Mono<?> touch(
             @RequestParam(name = "queue", defaultValue = "default") String queue,
-            @RequestParam(name = "user_id") Long userId,
+            @RequestParam(name = "idempotencyKey") String idempotencyKey,
             ServerWebExchange exchange
     ) {
-        return Mono.defer(() -> accessorQueuingService.generateToken(queue, userId))
+        return Mono.defer(() -> accessorQueuingService.generateToken(queue, idempotencyKey))
                 .map(token -> {
                     exchange.getResponse().addCookie(
                             ResponseCookie

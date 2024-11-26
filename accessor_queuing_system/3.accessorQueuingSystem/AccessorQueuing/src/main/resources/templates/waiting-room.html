@@ -33,8 +33,8 @@
 <script>
   function fetchWaitingRank() {
     const queue = '[[${queue}]]';
-    const userId = '[[${userId}]]';
-    const queryParam = new URLSearchParams({queue: queue, user_id: userId});
+    const idempotencyKey = '[[${idempotencyKey}]]';
+    const queryParam = new URLSearchParams({queue: queue, idempotencyKey: idempotencyKey});
     fetch('/api/accessor-queuing/rank?' + queryParam)
       .then(response => response.json())
       .then(data => {
@@ -44,7 +44,8 @@
               document.querySelector('#number').innerHTML = 0;
               document.querySelector('#updated').innerHTML = new Date();
 
-              const newUrl = window.location.origin + window.location.pathname + window.location.search;
+              // const newUrl = window.location.origin + window.location.pathname + window.location.search;
+              const newUrl = `http://localhost:8080/main?idempotencyKey=${idempotencyKey}`
               window.location.href = newUrl;
             })
             .catch(error => console.error(error));
@@ -56,7 +57,7 @@
       .catch(error => console.error(error));
   }
 
-  // setInterval(fetchWaitingRank, 3000);
+  setInterval(fetchWaitingRank, 3000);
 </script>
 </body>
 </html>

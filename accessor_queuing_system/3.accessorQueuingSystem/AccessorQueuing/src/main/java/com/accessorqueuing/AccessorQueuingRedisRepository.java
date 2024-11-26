@@ -23,12 +23,12 @@ public class AccessorQueuingRedisRepository {
         return reactiveRedisTemplate.opsForZSet();
     }
 
-    public Mono<Boolean> zSetAdd(String key, String queue, Long userId, long unixTimestamp) {
-        return this.redisTemplateOpsForZset().add(key.formatted(queue), userId.toString(), unixTimestamp);
+    public Mono<Boolean> zSetAdd(String key, String queue, String idempotencyKey, long unixTimestamp) {
+        return this.redisTemplateOpsForZset().add(key.formatted(queue), idempotencyKey, unixTimestamp);
     }
 
-    public Mono<Long> zRank(String key, String queue, Long userId) {
-        return this.redisTemplateOpsForZset().rank(key.formatted(queue), userId.toString());
+    public Mono<Long> zRank(String key, String queue, String idempotencyKey) {
+        return this.redisTemplateOpsForZset().rank(key.formatted(queue), idempotencyKey);
     }
 
     public Flux<ZSetOperations.TypedTuple<String>> zPopMin(String key, String queue, Long count) {
