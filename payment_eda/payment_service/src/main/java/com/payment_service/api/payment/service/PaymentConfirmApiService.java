@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -41,15 +42,15 @@ public class PaymentConfirmApiService {
         PaymentConfirmInPut paymentConfirmInPut = PaymentConfirmInPut.of(request.getPaymentKey(), request.getOrderId(), request.getAmount());
         PaymentExecutionResultOutPut paymentExecutionResult = tossPaymentExecutor.paymentConfirm(paymentConfirmInPut);
 
-        paymentStatusUpdateApiService.updatePaymentStatus(paymentExecutionResult);
+        PaymentEventMessage paymentEventMessage = paymentStatusUpdateApiService.updatePaymentStatus(paymentExecutionResult);
 
-        String orderId = request.getOrderId();
-        int partitionKey = partitionKeyUtil.createPartitionKey(orderId.hashCode());
-        PaymentEventMessage paymentEventMessage = this.createPaymentEventMessage(orderId, partitionKey);
-        streamBridge.send(bindingName, MessageBuilder
-                .withPayload(paymentEventMessage)
-                .setHeader(KafkaHeaders.KEY, String.valueOf(partitionKey))
-                .build());
+        if (!Objects.isNull(paymentEventMessage)) {
+            streamBridge.send(bindingName, MessageBuilder
+                    .withPayload(paymentEventMessage)
+                    .setHeader(KafkaHeaders.KEY, String.valueOf(paymentEventMessage.getMetadata().get("partitionKey")))
+                    .build()
+            );
+        }
     }
 
     private PaymentEventMessage createPaymentEventMessage(String orderId, int partitionKey) {
