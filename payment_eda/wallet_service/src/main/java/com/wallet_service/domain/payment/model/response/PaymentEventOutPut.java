@@ -3,7 +3,6 @@ package com.wallet_service.domain.payment.model.response;
 import com.querydsl.core.annotations.QueryProjection;
 import com.wallet_service.domain.payment.enums.PaymentEventMethod;
 import com.wallet_service.domain.payment.enums.PaymentEventType;
-import com.wallet_service.domain.wallet.model.response.PaymentOrderOutPut;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

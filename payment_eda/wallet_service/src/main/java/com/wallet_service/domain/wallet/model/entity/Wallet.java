@@ -1,7 +1,7 @@
 package com.wallet_service.domain.wallet.model.entity;
 
 import com.wallet_service.domain.seller.model.entity.Seller;
-import com.wallet_service.domain.wallet.model.request.WalletOutPut;
+import com.wallet_service.domain.wallet.model.response.WalletOutPut;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -43,11 +43,19 @@ public class Wallet {
                 .build();
     }
 
+    public static Wallet of(Seller seller, BigDecimal balance) {
+        return Wallet.builder()
+                .seller(seller)
+                .balance(balance)
+                .build();
+    }
+
     public static Wallet of(WalletOutPut walletOutPut) {
         return Wallet.builder()
                 .no(walletOutPut.getWalletNo())
                 .seller(Seller.of(walletOutPut.getSellerNo()))
                 .balance(walletOutPut.getBalance())
+                .version(walletOutPut.getVersion())
                 .build();
     }
 

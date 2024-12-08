@@ -1,4 +1,4 @@
-package com.wallet_service.domain.wallet.model.response;
+package com.wallet_service.domain.payment.model.response;
 
 import com.querydsl.core.annotations.QueryProjection;
 import com.wallet_service.domain.payment.enums.PaymentOrderStatus;

@@ -1,0 +1,31 @@
+spring:
+  config:
+    activate:
+      on-profile: common
+  messages:
+    basename: messages/messages, messages/error
+
+logging:
+  level:
+    p6spy: info
+    com:
+      zaxxer:
+        hikari: INFO
+
+#resilience4j.retry:
+#  configs:
+#    paymentRetryConfig:
+#      maxAttempts: 3
+#      waitDuration: 1000
+#      enableExponentialBackoff: true
+#      exponentialBackoffMultiplier: 5
+#      retryExceptions:
+#        - com.payment_service.error.exception.PSPConfirmationException   # retryExceptions에 지정된 예외는 재시도
+#    #      ignoreExceptions:
+#    #        -   # retryExceptions에 지정되지 않은 예외는 ignoreExceptions로 처리됨
+#  instances:
+#    paymentRetryConfig:
+#      baseConfig: paymentRetryConfig
+
+server:
+  port: 8081

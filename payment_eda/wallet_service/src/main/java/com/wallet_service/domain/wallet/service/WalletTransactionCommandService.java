@@ -1,8 +1,8 @@
 package com.wallet_service.domain.wallet.service;
 
 import com.wallet_service.domain.wallet.model.entity.WalletTransaction;
-import com.wallet_service.domain.wallet.model.request.WalletOutPut;
-import com.wallet_service.domain.wallet.model.request.WalletTransactionOutPut;
+import com.wallet_service.domain.wallet.model.response.WalletOutPut;
+import com.wallet_service.domain.wallet.model.response.WalletTransactionOutPut;
 import com.wallet_service.domain.wallet.repository.WalletTransactionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -2,6 +2,7 @@ package com.wallet_service.domain.payment.model.entity;
 
 import com.wallet_service.common.entity.CommonEntity;
 import com.wallet_service.domain.payment.enums.PaymentOrderStatus;
+import com.wallet_service.domain.product.model.entity.Product;
 import com.wallet_service.domain.seller.model.entity.Seller;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -10,7 +11,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 
 @Entity
@@ -65,4 +65,19 @@ public class PaymentOrder extends CommonEntity {
         this.status = status;
     }
 
+    public static PaymentOrder of(
+            PaymentEvent paymentEvent,
+            Product product,
+            Seller seller,
+            PaymentOrderStatus status
+    ) {
+        return PaymentOrder.builder()
+                .paymentEvent(paymentEvent)
+                .product(product)
+                .seller(seller)
+                .orderId(paymentEvent.getOrderId())
+                .amount(product.getPrice())
+                .status(status)
+                .build();
+    }
 }

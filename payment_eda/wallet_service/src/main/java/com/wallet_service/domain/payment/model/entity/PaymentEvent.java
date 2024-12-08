@@ -66,4 +66,20 @@ public class PaymentEvent extends CommonEntity {
         this.isPaymentDone = isPaymentDone;
     }
 
+    public static PaymentEvent of(
+            String paymentKey,
+            String orderId,
+            String orderName,
+            PaymentEventMethod method,
+            PaymentEventType type
+    ) {
+        return PaymentEvent.builder()
+                .paymentKey(paymentKey)
+                .orderId(orderId)
+                .orderName(orderName)
+                .method(method)
+                .type(type)
+                .build();
+    }
+
 }

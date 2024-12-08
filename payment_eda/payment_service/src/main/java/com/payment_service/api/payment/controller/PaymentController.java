@@ -19,6 +19,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -42,12 +43,12 @@ public class PaymentController {
 
     private final StreamBridge streamBridge;
     private final PartitionKeyUtil partitionKeyUtil;
-    private static final String bindingName = "producer-out-0";
+    private static final String bindingName = "send-out-0";
 
     @GetMapping("test")
     public String test() {
 
-        String orderId = "tewkgmwepm2394234";
+        String orderId = "tewkgmwepm2394234" + LocalDateTime.now().toString();
         int partitionKey = partitionKeyUtil.createPartitionKey(orderId.hashCode());
         PaymentEventMessage paymentEventMessage = this.createPaymentEventMessage(orderId, partitionKey);
 

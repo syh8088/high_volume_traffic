@@ -2,14 +2,9 @@ package com.wallet_service.domain.payment.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.wallet_service.domain.payment.model.entity.QPaymentOrder;
-import com.wallet_service.domain.payment.model.entity.QProduct;
-import com.wallet_service.domain.payment.model.response.PaymentOrderStatusOutPut;
-import com.wallet_service.domain.payment.model.response.PaymentOrderWithSellerOutPut;
-import com.wallet_service.domain.payment.model.response.QPaymentOrderStatusOutPut;
-import com.wallet_service.domain.payment.model.response.QPaymentOrderWithSellerOutPut;
+import com.wallet_service.domain.payment.model.response.*;
+import com.wallet_service.domain.product.model.entity.QProduct;
 import com.wallet_service.domain.seller.model.entity.QSeller;
-import com.wallet_service.domain.wallet.model.response.PaymentOrderOutPut;
-import com.wallet_service.domain.wallet.model.response.QPaymentOrderOutPut;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;

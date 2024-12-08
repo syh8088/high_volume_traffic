@@ -1,4 +1,4 @@
-package com.wallet_service.domain.wallet.model.request;
+package com.wallet_service.domain.wallet.model.response;
 
 import com.querydsl.core.annotations.QueryProjection;
 import com.wallet_service.domain.payment.model.response.PaymentOrderWithSellerOutPut;
@@ -17,13 +17,15 @@ public class WalletOutPut {
     private long walletNo;
     private long sellerNo;
     private BigDecimal balance;
+    private int version;
     private List<WalletTransactionOutPut> walletTransactionList;
 
     @QueryProjection
-    public WalletOutPut(long walletNo, long sellerNo, BigDecimal balance) {
+    public WalletOutPut(long walletNo, long sellerNo, BigDecimal balance, int version) {
         this.walletNo = walletNo;
         this.sellerNo = sellerNo;
         this.balance = balance;
+        this.version = version;
     }
 
     public void calculateBalance(List<PaymentOrderWithSellerOutPut> paymentOrders) {
@@ -54,5 +56,18 @@ public class WalletOutPut {
 
     private void updateWalletTransactionList(List<WalletTransactionOutPut> walletTransactionList) {
         this.walletTransactionList = walletTransactionList;
+    }
+
+    public void addBalance(WalletOutPut wallet) {
+
+        this.balance = BigDecimal.valueOf(
+                wallet.getWalletTransactionList().stream()
+                        .mapToDouble(data -> data.getAmount().doubleValue())
+                        .sum()
+        ).add(this.balance);
+    }
+
+    public void updateWalletTransactions(List<WalletTransactionOutPut> walletTransactionOutPuts) {
+        this.walletTransactionList = walletTransactionOutPuts;
     }
 }

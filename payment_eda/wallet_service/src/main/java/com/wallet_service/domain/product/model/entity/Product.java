@@ -1,4 +1,4 @@
-package com.wallet_service.domain.payment.model.entity;
+package com.wallet_service.domain.product.model.entity;
 
 import com.wallet_service.common.entity.CommonEntity;
 import com.wallet_service.domain.seller.model.entity.Seller;
@@ -42,5 +42,14 @@ public class Product extends CommonEntity {
         this.productId = productId;
         this.name = name;
         this.price = price;
+    }
+
+    public static Product of(String productId, String name, BigDecimal price, Seller seller) {
+        return Product.builder()
+                .productId(productId)
+                .name(name)
+                .price(price)
+                .seller(seller)
+                .build();
     }
 }

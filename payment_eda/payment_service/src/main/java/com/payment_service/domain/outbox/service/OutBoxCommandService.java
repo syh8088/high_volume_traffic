@@ -29,7 +29,7 @@ public class OutBoxCommandService {
                 OutBoxStatus.INIT,
                 (String) paymentEventMessage.getPayload().get("orderId"),
                 paymentEventMessage.getType().name(),
-                (paymentEventMessage.getMetadata().get("partitionKey") != null) ? (int) paymentEventMessage.getMetadata().get("partitionKey") : 0,
+                (paymentEventMessage.getMetadata().get("partitionKey") != null) ? Integer.parseInt((String) paymentEventMessage.getMetadata().get("partitionKey")) : 0,
                 objectMapper.writeValueAsString(paymentEventMessage.getPayload()),
                 objectMapper.writeValueAsString(paymentEventMessage.getMetadata())
 

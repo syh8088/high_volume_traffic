@@ -93,7 +93,7 @@ public class PaymentStatusUpdateApiService {
         return PaymentEventMessage.of(
                 PaymentEventMessageType.PAYMENT_CONFIRMATION_SUCCESS,
                 Map.of("orderId", orderId),
-                Map.of("partitionKey", partitionKey)
+                Map.of("partitionKey", String.valueOf(partitionKey))
         );
     }
 }

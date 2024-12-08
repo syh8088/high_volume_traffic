@@ -1,5 +1,6 @@
-package com.wallet_service.domain.wallet.model.request;
+package com.wallet_service.domain.wallet.model.response;
 
+import com.querydsl.core.annotations.QueryProjection;
 import com.wallet_service.domain.wallet.enums.TransactionType;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,14 +19,23 @@ public class WalletTransactionOutPut {
     private Long referenceId;
     private String idempotencyKey;
 
-    @Builder
-    private WalletTransactionOutPut(BigDecimal amount, TransactionType type, String orderId, String referenceType, Long referenceId, String idempotencyKey) {
+    @QueryProjection
+    public WalletTransactionOutPut(BigDecimal amount, TransactionType type, String orderId, String referenceType, Long referenceId, String idempotencyKey) {
         this.amount = amount;
         this.type = type;
         this.orderId = orderId;
         this.referenceType = referenceType;
         this.referenceId = referenceId;
         this.idempotencyKey = idempotencyKey;
+    }
+
+    @Builder
+    private WalletTransactionOutPut(BigDecimal amount, TransactionType type, String orderId, String referenceType, Long referenceId) {
+        this.amount = amount;
+        this.type = type;
+        this.orderId = orderId;
+        this.referenceType = referenceType;
+        this.referenceId = referenceId;
     }
 
     public static WalletTransactionOutPut of(

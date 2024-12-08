@@ -22,7 +22,7 @@ public class KafkaConsumer implements Consumer<Message<PaymentEventMessage>> {
     public void accept(Message<PaymentEventMessage> clusterMessage) {
         log.info("key: {}", clusterMessage.getHeaders().get(KafkaHeaders.RECEIVED_KEY));
         PaymentEventMessage paymentEventMessage = clusterMessage.getPayload();
-        settlementService.settlementProcess(paymentEventMessage);
+        settlementService.settlementProcess(paymentEventMessage.orderId());
         log.info("payload: {}", paymentEventMessage);
     }
 }

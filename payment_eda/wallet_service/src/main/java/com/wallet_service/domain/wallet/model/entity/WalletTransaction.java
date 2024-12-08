@@ -1,7 +1,7 @@
 package com.wallet_service.domain.wallet.model.entity;
 
 import com.wallet_service.domain.wallet.enums.TransactionType;
-import com.wallet_service.domain.wallet.model.request.WalletTransactionOutPut;
+import com.wallet_service.domain.wallet.model.response.WalletTransactionOutPut;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -25,24 +25,46 @@ spring:
     stream:
       kafka:
         bindings:
-          producer-out-0:
+
+
+          # 추가로 카프카 프로듀서를 통해서 메시지를 보낸 이후에 메시지 전송 결과를 받아볼 수 있도록
+          # 레코드 메타 데이터 채널 설정을 추가해 줄게요.
+          # 메시지는 기본적으로 비동기식으로 전송될 거예요. 이렇게 메시지 전송 결과를 받아보지 않는다면 메시지 전달이 되었는지 보장할 수 없음
+          send-out-0:
             producer:
+#              record-metadata-channel: payment-result
               configuration:
                 key:
                   serializer: org.apache.kafka.common.serialization.StringSerializer
-          kafkaConsumer-in-0:
-            consumer:
-              configuration:
-                key:
-                  deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#          producer-out-0:
+#            producer:
+#              configuration:
+#                key:
+#                  serializer: org.apache.kafka.common.serialization.StringSerializer
+#          kafkaConsumer-in-0:
+#            consumer:
+#              configuration:
+#                key:
+#                  deserializer: org.apache.kafka.common.serialization.StringDeserializer
         binder:
-          brokers: 127.0.0.1:19092
+          brokers: 127.0.0.1:9092
+
+
       bindings:
-        producer-out-0:
-          destination: test # topic
-          contentType: application/json
-        kafkaConsumer-in-0:
-          destination: test  # topic
+        send-out-0:
+          destination: payment # topic
+          group: payment-service
+
+        # 정산 처리 성공 메시지와 장부 기입 성공 메시지를 카프카에서 수신할 수 있도록 바인딩을 선언
+        wallet-in-0:
+          destination: wallet
+          group: payment-service
+
+        # payment 서비스에는 이제 여러 개의 바인딩이 존재하기 때문에 어떤 함수들이 바인딩인지 명시 해야 한다.
+        # 세미콜론을 기준으로 바인딩 함수들이 구별
+        ledger-in-0:
+          destination: ledger
+          group: payment-service
 
 
 
