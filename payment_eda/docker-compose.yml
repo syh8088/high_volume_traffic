@@ -69,18 +69,18 @@ services:
 
 # Domain services
 
-#  payment-service:
-#    image: payment-service
-#    ports:
-#      - "8080:8080"
-#    depends_on:
-#      - mysql-server
-#      - kafka1
-#
-#  wallet-service:
-#    image: wallet-service
-#    ports:
-#      - "8081:8080"
-#    depends_on:
-#      - mysql-server
-#      - kafka1
+  payment-service:
+    image: payment-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql-server
+      - kafka1
+
+  wallet-service:
+    image: wallet-service
+    ports:
+      - "8081:8080"
+    depends_on:
+      - mysql-server
+      - kafka1
