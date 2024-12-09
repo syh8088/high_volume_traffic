@@ -2,6 +2,7 @@
 
 자세한 설명은 
 
+https://syh8088.github.io/2024/12/13/HIGH_VOLUME_TRAFFIC/PaymentEDA/PaymentEDA/
 
 에서 정리 되어 있습니다. 참고 부탁드립니다.
 
