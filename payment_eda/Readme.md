@@ -67,6 +67,7 @@ create table payment_events
         primary key,
     member_no       bigint                               null,
     is_payment_done tinyint(1) default 0                 not null,
+    is_wallet_done  tinyint(1) default 0                 not null,
     payment_key     varchar(255)                         null,
     order_id        varchar(255)                         null,
     type            enum ('NORMAL')                      not null,

@@ -1,5 +1,6 @@
-package com.wallet_service;
+package com.payment_service.message.model;
 
+import com.payment_service.message.enums.PaymentEventMessageType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,7 +20,9 @@ public class PaymentEventMessage {
         this.metadata = metadata;
     }
 
-    public String orderId() {
-        return (String) payload.get("orderId");
+    public static PaymentEventMessage of(PaymentEventMessageType type, Map<String, Object> payload, Map<String, Object> metadata) {
+        return new PaymentEventMessage(type, payload, metadata);
     }
+
+
 }

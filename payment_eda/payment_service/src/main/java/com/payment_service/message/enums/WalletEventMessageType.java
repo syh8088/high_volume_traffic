@@ -1,4 +1,4 @@
-package com.payment_service;
+package com.payment_service.message.enums;
 
 import lombok.Getter;
 

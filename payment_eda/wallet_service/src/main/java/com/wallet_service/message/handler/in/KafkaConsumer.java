@@ -1,7 +1,8 @@
-package com.wallet_service;
+package com.wallet_service.message.handler.in;
 
 import com.wallet_service.domain.wallet.model.WalletEventMessage;
 import com.wallet_service.domain.wallet.service.SettlementService;
+import com.wallet_service.message.model.PaymentEventMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

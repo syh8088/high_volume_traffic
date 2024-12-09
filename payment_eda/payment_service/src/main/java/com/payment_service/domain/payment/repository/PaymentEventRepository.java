@@ -21,4 +21,8 @@ public interface PaymentEventRepository extends JpaRepository<PaymentEvent, Long
             @Param("approvedDateTime") LocalDateTime approvedDateTime,
             @Param("isPaymentDone") boolean isPaymentDone
     );
+
+    @Modifying
+    @Query("UPDATE PaymentEvent AS p SET p.isWalletDone = :isWalletDone WHERE p.orderId = :orderId")
+    void updateIsWalletDoneByOrderId(@Param("orderId") String orderId, @Param("isWalletDone") boolean isWalletDone);
 }

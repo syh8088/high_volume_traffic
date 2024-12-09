@@ -1,8 +1,8 @@
 package com.payment_service.api.payment.service;
 
-import com.payment_service.api.payment.controller.PartitionKeyUtil;
-import com.payment_service.api.payment.controller.PaymentEventMessage;
-import com.payment_service.api.payment.controller.PaymentEventMessageType;
+import com.payment_service.message.service.PartitionKeyUtil;
+import com.payment_service.message.model.PaymentEventMessage;
+import com.payment_service.message.enums.PaymentEventMessageType;
 import com.payment_service.domain.outbox.service.OutBoxCommandService;
 import com.payment_service.domain.payment.enums.PaymentOrderStatus;
 import com.payment_service.domain.payment.model.response.PaymentExecutionResultOutPut;
@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.reactive.TransactionalEventPublisher;
 
 import java.util.List;
 import java.util.Map;

@@ -56,9 +56,11 @@ public class PaymentEvent extends CommonEntity {
     @Column(name = "is_payment_done")
     private boolean isPaymentDone;
 
+    @Column(name = "is_wallet_done")
+    private boolean isWalletDone;
 
     @Builder
-    private PaymentEvent(List<PaymentOrder> paymentOrderList, String orderId, String paymentKey, String orderName, PaymentEventMethod method, PaymentEventType type, LocalDateTime approvedDateTime, String pspRawData, boolean isPaymentDone) {
+    private PaymentEvent(List<PaymentOrder> paymentOrderList, String orderId, String paymentKey, String orderName, PaymentEventMethod method, PaymentEventType type, LocalDateTime approvedDateTime, String pspRawData, boolean isPaymentDone, boolean isWalletDone) {
         this.paymentOrderList = paymentOrderList;
         this.orderId = orderId;
         this.paymentKey = paymentKey;
@@ -68,6 +70,7 @@ public class PaymentEvent extends CommonEntity {
         this.approvedDateTime = approvedDateTime;
         this.pspRawData = pspRawData;
         this.isPaymentDone = isPaymentDone;
+        this.isWalletDone = isWalletDone;
     }
 
     public static PaymentEvent of(

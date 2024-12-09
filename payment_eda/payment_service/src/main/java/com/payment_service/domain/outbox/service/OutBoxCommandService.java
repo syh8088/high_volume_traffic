@@ -1,8 +1,7 @@
 package com.payment_service.domain.outbox.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.payment_service.api.payment.controller.PaymentEventMessage;
+import com.payment_service.message.model.PaymentEventMessage;
 import com.payment_service.domain.outbox.enums.OutBoxStatus;
 import com.payment_service.domain.outbox.model.entity.OutBox;
 import com.payment_service.domain.outbox.repository.OutBoxRepository;
@@ -36,5 +35,9 @@ public class OutBoxCommandService {
         );
 
         outBoxRepository.save(outBox);
+    }
+
+    public void updateStatusByIdempotencyKey(String idempotencyKey, OutBoxStatus outBoxStatus) {
+        outBoxRepository.updateStatusByIdempotencyKey(idempotencyKey, outBoxStatus);
     }
 }

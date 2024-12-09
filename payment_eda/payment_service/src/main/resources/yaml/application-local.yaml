@@ -3,8 +3,8 @@ spring:
     activate:
       on-profile: local
   datasource:
-#    url: jdbc:mysql://localhost:3306/payment_eda
-    url: jdbc:mysql://mysql-server:3306/payment_eda
+    url: jdbc:mysql://localhost:3306/payment_eda
+#    url: jdbc:mysql://mysql-server:3306/payment_eda
     username: root
     password: 1234
   jpa:
@@ -26,28 +26,19 @@ spring:
       definition: wallet;
     stream:
       kafka:
+        binder:
+          brokers: 127.0.0.1:9092
+#          brokers: kafka1:9092
         bindings:
 
-
-          # 추가로 카프카 프로듀서를 통해서 메시지를 보낸 이후에 메시지 전송 결과를 받아볼 수 있도록
-          # 레코드 메타 데이터 채널 설정을 추가해 줄게요.
-          # 메시지는 기본적으로 비동기식으로 전송될 거예요. 이렇게 메시지 전송 결과를 받아보지 않는다면 메시지 전달이 되었는지 보장할 수 없음
+          # 카프카 프로듀서를 통해서 메시지를 보낸 이후에 메시지 전송 결과를 받아볼 수 있도록 레코드 메타 데이터 채널 설정을 추가
+          # 메시지는 기본적으로 비동기식으로 전송 합니다. 이렇게 메시지 전송 결과를 받아보지 않는다면 메시지 전달이 되었는지 보장할 수 없음
           send-out-0:
             producer:
               record-metadata-channel: payment-result
               configuration:
                 key:
                   serializer: org.apache.kafka.common.serialization.StringSerializer
-#          producer-out-0:
-#            producer:
-#              configuration:
-#                key:
-#                  serializer: org.apache.kafka.common.serialization.StringSerializer
-#          kafkaConsumer-in-0:
-#            consumer:
-#              configuration:
-#                key:
-#                  deserializer: org.apache.kafka.common.serialization.StringDeserializer
           wallet-in-0:
             consumer:
               configuration:
@@ -56,10 +47,6 @@ spring:
               # 메시지 처리의 신뢰성을 보장하기 위해서 데드레터 큐 또한 사용할 수 있도록 설정
               enable-dlq: true
               dlq-name: wallet_payment_dlq
-        binder:
-#          brokers: 127.0.0.1:9092
-          brokers: kafka1:9092
-
 
       bindings:
         send-out-0:
@@ -70,14 +57,6 @@ spring:
         wallet-in-0:
           destination: wallet
           group: payment-service
-
-        # payment 서비스에는 이제 여러 개의 바인딩이 존재하기 때문에 어떤 함수들이 바인딩인지 명시 해야 한다.
-        # 세미콜론을 기준으로 바인딩 함수들이 구별
-        ledger-in-0:
-          destination: ledger
-          group: payment-service
-
-
 
 logging:
   level:

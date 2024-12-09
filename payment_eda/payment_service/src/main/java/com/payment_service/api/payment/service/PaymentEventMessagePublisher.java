@@ -1,6 +1,6 @@
 package com.payment_service.api.payment.service;
 
-import com.payment_service.api.payment.controller.PaymentEventMessage;
+import com.payment_service.message.model.PaymentEventMessage;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.reactive.TransactionalEventPublisher;

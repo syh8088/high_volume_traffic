@@ -33,4 +33,8 @@ public class PaymentEventCommendService {
                 isPaymentDone
         );
     }
+
+    public void updateIsWalletDoneByOrderId(String orderId, boolean isWalletDone) {
+        paymentEventRepository.updateIsWalletDoneByOrderId(orderId, isWalletDone);
+    }
 }

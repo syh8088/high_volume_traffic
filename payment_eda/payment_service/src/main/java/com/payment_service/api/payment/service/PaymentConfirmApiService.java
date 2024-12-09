@@ -1,6 +1,6 @@
 package com.payment_service.api.payment.service;
 
-import com.payment_service.api.payment.controller.PaymentEventMessage;
+import com.payment_service.message.model.PaymentEventMessage;
 import com.payment_service.api.payment.model.request.PaymentConfirmRequest;
 import com.payment_service.domain.payment.model.request.PaymentConfirmInPut;
 import com.payment_service.domain.payment.model.response.PaymentExecutionResultOutPut;

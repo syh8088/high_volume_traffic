@@ -3,8 +3,8 @@ spring:
     activate:
       on-profile: local
   datasource:
-#    url: jdbc:mysql://localhost:3306/payment_eda
-    url: jdbc:mysql://mysql-server:3306/payment_eda
+    url: jdbc:mysql://localhost:3306/payment_eda
+#    url: jdbc:mysql://mysql-server:3306/payment_eda
     username: root
     password: 1234
   jpa:
@@ -21,7 +21,6 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
     open-in-view: false
 
-
   cloud:
     function:
       definition: kafkaConsumer;
@@ -33,8 +32,8 @@ spring:
               enable-dlq: true
               dlq-name: payment_wallet_dlq
         binder:
-          #brokers: 127.0.0.1:9092
-          brokers: kafka1:9092
+          brokers: 127.0.0.1:9092
+#          brokers: kafka1:9092
       bindings:
         kafkaConsumer-in-0:
           destination: payment # topic
@@ -44,8 +43,8 @@ spring:
 
 logging:
   level:
-    org.hibernate.SQL: debug # logger? ?????
-    org.hibernate.type.descriptor.sql: trace # ???? ? ??
+    org.hibernate.SQL: debug # logger에 출력하려면
+    org.hibernate.type.descriptor.sql: trace # 파라미터 값 출력
     p6spy: info
     com:
       zaxxer:

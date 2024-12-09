@@ -5,6 +5,9 @@ import com.payment_service.api.payment.model.response.PaymentEventResponse;
 import com.payment_service.api.payment.model.response.PaymentEventWithOrderResponse;
 import com.payment_service.api.payment.service.PaymentApiService;
 import com.payment_service.common.ApiResponse;
+import com.payment_service.message.enums.PaymentEventMessageType;
+import com.payment_service.message.model.PaymentEventMessage;
+import com.payment_service.message.service.PartitionKeyUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.support.KafkaHeaders;
@@ -13,10 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.cloud.stream.function.StreamBridge;
-import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.support.MessageBuilder;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
 
 
 import java.time.LocalDateTime;

@@ -1,4 +1,4 @@
-package com.payment_service.api.payment.controller;
+package com.payment_service.message.service;
 
 import org.springframework.stereotype.Component;
 
