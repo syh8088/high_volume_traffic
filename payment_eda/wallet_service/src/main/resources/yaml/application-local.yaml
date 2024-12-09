@@ -3,7 +3,8 @@ spring:
     activate:
       on-profile: local
   datasource:
-    url: jdbc:mysql://localhost:3306/payment_eda
+#    url: jdbc:mysql://localhost:3306/payment_eda
+    url: jdbc:mysql://mysql-server:3306/payment_eda
     username: root
     password: 1234
   jpa:
@@ -17,6 +18,7 @@ spring:
         format_sql: true # SQL 포맷팅
         highlight_sql: true # ANSI 코드에 색을 나타낸다
         use_sql_comments: true # SQL 내부에 /* */ 주석 추가
+        dialect: org.hibernate.dialect.MySQLDialect
     open-in-view: false
 
 
@@ -26,34 +28,14 @@ spring:
     stream:
       kafka:
         bindings:
-          #          producer-out-0:
-          #            producer:
-          #              configuration:
-          #                key:
-          #                  serializer: org.apache.kafka.common.serialization.StringSerializer
-          #          kafkaConsumer-in-0:
-          #            consumer:
-          #              configuration:
-          #                key:
-          #                  deserializer: org.apache.kafka.common.serialization.StringDeserializer
-
           kafkaConsumer-in-0:
-            producer:
-              configuration:
-                key:
-                  serializer: org.apache.kafka.common.serialization.StringSerializer
-        #          consume-in-0:
-        #            consumer:
-        #              enable-dlq: true
-        #              dlq-name: payment_wallet_dlq
+            consumer:
+              enable-dlq: true
+              dlq-name: payment_wallet_dlq
         binder:
-          brokers: 127.0.0.1:9092
+          #brokers: 127.0.0.1:9092
+          brokers: kafka1:9092
       bindings:
-        #        producer-out-0:
-        #          destination: test # topic
-        #          contentType: application/json
-        #        kafkaConsumer-in-0:
-        #          destination: test  # topic
         kafkaConsumer-in-0:
           destination: payment # topic
           group: wallet-service

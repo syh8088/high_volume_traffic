@@ -1,7 +1,6 @@
 package com.wallet_service.domain.wallet.service;
 
 import com.wallet_service.domain.wallet.model.response.WalletOutPut;
-import com.wallet_service.domain.wallet.model.response.WalletTransactionOutPut;
 import com.wallet_service.domain.wallet.repository.WalletRepository;
 import com.wallet_service.domain.wallet.repository.WalletTransactionRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,16 +30,6 @@ public class WalletQueryService {
 
     public List<WalletOutPut> selectWalletListWithWalletTransactionsByWalletNoList(List<Long> requestWalletNoList) {
 
-        List<WalletOutPut> walletOutPuts = walletRepository.selectWalletListByWalletNoList(requestWalletNoList);
-
-//        for (WalletOutPut wallet : walletOutPuts) {
-//            long walletNo = wallet.getWalletNo();
-//            List<WalletTransactionOutPut> walletTransactionOutPuts
-//                    = walletTransactionRepository.selectWalletTransactionListByWalletNo(walletNo);
-//
-//            wallet.updateWalletTransactions(walletTransactionOutPuts);
-//        }
-
-      return walletOutPuts;
+        return walletRepository.selectWalletListByWalletNoList(requestWalletNoList);
     }
 }

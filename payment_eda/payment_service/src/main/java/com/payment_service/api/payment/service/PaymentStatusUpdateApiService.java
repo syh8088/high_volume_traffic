@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.reactive.TransactionalEventPublisher;
 
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,7 @@ public class PaymentStatusUpdateApiService {
     private final OutBoxCommandService outBoxCommandService;
 
     private final PartitionKeyUtil partitionKeyUtil;
+    private final PaymentEventMessagePublisher paymentEventMessagePublisher;
 
     @Transactional
     public PaymentEventMessage updatePaymentStatus(PaymentExecutionResultOutPut paymentExecutionResult) {
@@ -70,6 +72,7 @@ public class PaymentStatusUpdateApiService {
         int partitionKey = partitionKeyUtil.createPartitionKey(orderId.hashCode());
         PaymentEventMessage paymentEventMessage = this.createPaymentEventMessage(orderId, partitionKey);
         outBoxCommandService.insertOutBox(paymentEventMessage);
+//        paymentEventMessagePublisher.publishEvent(paymentEventMessage);
 
         return paymentEventMessage;
     }

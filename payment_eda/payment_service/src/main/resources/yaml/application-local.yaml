@@ -3,7 +3,8 @@ spring:
     activate:
       on-profile: local
   datasource:
-    url: jdbc:mysql://localhost:3306/payment_eda
+#    url: jdbc:mysql://localhost:3306/payment_eda
+    url: jdbc:mysql://mysql-server:3306/payment_eda
     username: root
     password: 1234
   jpa:
@@ -17,11 +18,12 @@ spring:
         format_sql: true # SQL 포맷팅
         highlight_sql: true # ANSI 코드에 색을 나타낸다
         use_sql_comments: true # SQL 내부에 /* */ 주석 추가
+        dialect: org.hibernate.dialect.MySQLDialect
     open-in-view: false
 
   cloud:
     function:
-      definition: kafkaConsumer;
+      definition: wallet;
     stream:
       kafka:
         bindings:
@@ -32,7 +34,7 @@ spring:
           # 메시지는 기본적으로 비동기식으로 전송될 거예요. 이렇게 메시지 전송 결과를 받아보지 않는다면 메시지 전달이 되었는지 보장할 수 없음
           send-out-0:
             producer:
-#              record-metadata-channel: payment-result
+              record-metadata-channel: payment-result
               configuration:
                 key:
                   serializer: org.apache.kafka.common.serialization.StringSerializer
@@ -46,8 +48,17 @@ spring:
 #              configuration:
 #                key:
 #                  deserializer: org.apache.kafka.common.serialization.StringDeserializer
+          wallet-in-0:
+            consumer:
+              configuration:
+                isolation:
+                  level: read_committed
+              # 메시지 처리의 신뢰성을 보장하기 위해서 데드레터 큐 또한 사용할 수 있도록 설정
+              enable-dlq: true
+              dlq-name: wallet_payment_dlq
         binder:
-          brokers: 127.0.0.1:9092
+#          brokers: 127.0.0.1:9092
+          brokers: kafka1:9092
 
 
       bindings:
