@@ -35,7 +35,7 @@ public class WalletOutPut {
                 .sum();
 
         BigDecimal calculatedBalance = BigDecimal.valueOf(calculatedAmount);
-        this.updateBalance(calculatedBalance);
+        this.updateBalance(calculatedBalance.add(this.balance));
 
         List<WalletTransactionOutPut> walletTransactionList = paymentOrders.stream()
                 .map(item -> WalletTransactionOutPut.of(
