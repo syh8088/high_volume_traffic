@@ -1,4 +1,4 @@
-package com.payment_service.message.handler.in;
+package com.payment_service.message.handler;
 
 import com.payment_service.domain.outbox.enums.OutBoxStatus;
 import com.payment_service.domain.outbox.service.OutBoxCommandService;

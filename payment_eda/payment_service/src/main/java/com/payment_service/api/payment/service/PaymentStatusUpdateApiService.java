@@ -11,6 +11,7 @@ import com.payment_service.domain.payment.service.PaymentEventQueryService;
 import com.payment_service.domain.payment.service.PaymentOrderQueryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,17 +29,16 @@ public class PaymentStatusUpdateApiService {
     private final OutBoxCommandService outBoxCommandService;
 
     private final PartitionKeyUtil partitionKeyUtil;
-    private final PaymentEventMessagePublisher paymentEventMessagePublisher;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Transactional
-    public PaymentEventMessage updatePaymentStatus(PaymentExecutionResultOutPut paymentExecutionResult) {
+    public void updatePaymentStatus(PaymentExecutionResultOutPut paymentExecutionResult) {
 
         PaymentOrderStatus paymentStatus = paymentExecutionResult.getPaymentStatus();
-        PaymentEventMessage paymentEventMessage = null;
 
         switch (paymentStatus) {
             case SUCCESS:
-                paymentEventMessage = this.updatePaymentStatusToSuccess(paymentExecutionResult);
+                this.updatePaymentStatusToSuccess(paymentExecutionResult);
                 break;
             case FAILURE, UNKNOWN:
                 this.updatePaymentStatusToFailureOrUnknown(paymentExecutionResult);
@@ -49,11 +49,9 @@ public class PaymentStatusUpdateApiService {
                 throw new IllegalArgumentException("결제 상태 업그레이드 에러 발생 ## 주문 아이디값: " + paymentExecutionResult.getOrderId());
             }
         }
-
-        return paymentEventMessage;
     }
 
-    private PaymentEventMessage updatePaymentStatusToSuccess(PaymentExecutionResultOutPut paymentExecutionResult) {
+    private void updatePaymentStatusToSuccess(PaymentExecutionResultOutPut paymentExecutionResult) {
 
         List<PaymentOrderStatusOutPut> paymentOrderStatusList
                 = paymentOrderQueryService.selectPaymentOrderStatusListByOrderId(paymentExecutionResult.getOrderId());
@@ -71,9 +69,8 @@ public class PaymentStatusUpdateApiService {
         int partitionKey = partitionKeyUtil.createPartitionKey(orderId.hashCode());
         PaymentEventMessage paymentEventMessage = this.createPaymentEventMessage(orderId, partitionKey);
         outBoxCommandService.insertOutBox(paymentEventMessage);
-//        paymentEventMessagePublisher.publishEvent(paymentEventMessage);
 
-        return paymentEventMessage;
+        eventPublisher.publishEvent(paymentEventMessage);
     }
 
     private void updatePaymentStatusToFailureOrUnknown(PaymentExecutionResultOutPut paymentExecutionResult) {
