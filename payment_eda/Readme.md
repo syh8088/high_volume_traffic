@@ -18,7 +18,9 @@ https://syh8088.github.io/2024/12/13/HIGH_VOLUME_TRAFFIC/PaymentEDA/PaymentEDA/
 - JPA
 - QueryDsl
 - Mysql 8.x
+- zookeeper
 - Kafka
+- kafka-ui
 - docker
 
 #### 결제 프로세스 설명
@@ -57,6 +59,19 @@ docker-compose up
 ```
 
 명령어를 실행 하도록 합니다.
+
+#### Endpoints
+- 결제 페이지
+    - http://localhost:8080
+- Kafka
+    - http://localhost:9092
+- Kafka UI
+    - http://localhost:8989
+- Mysql
+    - http://localhost:3306
+    - root password: `1234`
+    - database: `payment_eda`
+    - User/PW: `root`/`1234`
 
 #### DB 초기 셋팅
 ```mysql
