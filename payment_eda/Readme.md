@@ -24,14 +24,14 @@ https://syh8088.github.io/2024/12/13/HIGH_VOLUME_TRAFFIC/PaymentEDA/PaymentEDA/
 - docker
 
 #### 결제 프로세스 설명
-![결제 프로세스](./paymentProcess.png)
+![결제 프로세스](./md_resource/paymentProcess.png)
 
 간단하게 TEST 대상이 되는 결제 시스템에 대해 설명 하도록 하겠습니다.
 
 1. 우선 사용자가 결제 버튼을 클릭하면 'Checkout' 이벤트가 발생되면서 사용자가 특정 상품에 대한 구매 이벤트를 발생 하도록 합니다.
 2. 'Checkout' 이벤트가 발생되면서 서비스단에서는 PaymentEvent 가 생성되고 더불어 해당 이벤트에 대한 unique id 값을 생성 하도록 합니다.
 
-![토스 결제 위젯](./tossPaymentWidget.png)
+![토스 결제 위젯](./md_resource/tossPaymentWidget.png)
 
 3. 특정 결제 unique id 값 포함해서 상품 가격 데이터를 Toss 서버에 전달 하게 되고 이에 응답으로 Toss 에서 제공하는 결제 위젯 페이지를 띄우게 됩니다.
 4. 사용자가 Toss 에서 제공하는 위젯페이지 통해 실질적으로 결제가 진행 됩니다.
